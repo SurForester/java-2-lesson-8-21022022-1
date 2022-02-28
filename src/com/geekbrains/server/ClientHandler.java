@@ -49,7 +49,7 @@ public class ClientHandler {
                     if (!server.isNickNameBusy(nickName)) {
                         sendAuthenticationMessage(true);
                         this.nickName = nickName;
-                        server.broadcastMessage(nickName + " зашел в чат");
+                        server.broadcastMessage(ServerCommandConstants.ENTER_NICKNAME + " " + nickName, nickName);
                         sendMessage(server.getClients());
                         server.addConnectedUser(this);
                         return;
@@ -76,7 +76,7 @@ public class ClientHandler {
                 return;
             }
 
-            server.broadcastMessage(nickName + ": " + messageInChat);
+            server.broadcastMessage(nickName + ": " + messageInChat, nickName);
         }
     }
 
@@ -90,7 +90,7 @@ public class ClientHandler {
 
     private void closeConnection() {
         server.disconnectUser(this);
-        server.broadcastMessage(ServerCommandConstants.EXIT + " " + nickName);
+        server.broadcastMessage(ServerCommandConstants.EXIT + " " + nickName, nickName);
         try {
             outputStream.close();
             inputStream.close();

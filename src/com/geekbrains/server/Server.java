@@ -50,9 +50,11 @@ public class Server {
         return false;
     }
 
-    public synchronized void broadcastMessage(String message) {
+    public synchronized void broadcastMessage(String message, String nickName) {
         for (ClientHandler handler : connectedUsers) {
-            handler.sendMessage(message);
+            if (!handler.getNickName().equals(nickName)) {
+                handler.sendMessage(message);
+            }
         }
     }
 
